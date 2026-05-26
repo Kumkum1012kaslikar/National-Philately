@@ -1,3 +1,8 @@
+"use client";
+
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -8,69 +13,29 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Stamp, Users, CreditCard, Search } from "lucide-react";
-import Link from "next/link";
 
 export default function LandingPage() {
+  const router = useRouter();
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const handleSearch = () => {
+    if (searchQuery.trim()) {
+      router.push(`/catalog?search=${encodeURIComponent(searchQuery.trim())}`);
+    } else {
+      router.push("/catalog");
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      handleSearch();
+    }
+  };
   return (
     <div
       className="min-h-screen bg-gradient-to-b from-blue-100 to-white"
       lang="en"
     >
-      <a
-        href="#main-content"
-        className="sr-only focus:not-sr-only focus:absolute focus:top-0 focus:left-0 bg-blue-600 text-white p-2"
-      >
-        Skip to main content
-      </a>
-      <header className="bg-white shadow-md">
-        <div className="container mx-auto px-4 py-6 flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-blue-800">
-            National Community of Philatelists
-          </h1>
-          <nav aria-label="Main navigation">
-            <ul className="flex space-x-4">
-              <li>
-                <Link href="/" className="text-blue-600 hover:text-blue-800">
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/catalog"
-                  className="text-blue-600 hover:text-blue-800"
-                >
-                  Catalog
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/community"
-                  className="text-blue-600 hover:text-blue-800"
-                >
-                  Community
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/account"
-                  className="text-blue-600 hover:text-blue-800"
-                >
-                  Account
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/login"
-                  className="text-blue-600 hover:text-blue-800"
-                >
-                  Login
-                </Link>
-              </li>
-            </ul>
-          </nav>
-        </div>
-      </header>
-
       <main id="main-content" className="container mx-auto px-4 py-12">
         <section className="text-center mb-16">
           <h2 className="text-4xl font-bold text-blue-900 mb-4">
@@ -84,8 +49,11 @@ export default function LandingPage() {
               className="w-64 mr-2"
               placeholder="Search for stamps, postcards..."
               aria-label="Search for stamps or postcards"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onKeyDown={handleKeyDown}
             />
-            <Button>
+            <Button onClick={handleSearch}>
               <Search className="w-4 h-4 mr-2" />
               Search
             </Button>
@@ -146,36 +114,10 @@ export default function LandingPage() {
             Start your philatelic journey with access to nationwide releases and
             a supportive community.
           </p>
-          <Button size="lg">Sign Up Now</Button>
+          <Link href="/login?tab=signup">
+            <Button size="lg">Sign Up Now</Button>
+          </Link>
         </section>
-      </main>
-
-      <footer className="bg-blue-900 text-white py-8">
-        <div className="container mx-auto px-4 flex justify-between items-center">
-          <p>
-            &copy; 2023 National Community of Philatelists. All rights reserved.
-          </p>
-          <nav aria-label="Footer navigation">
-            <ul className="flex space-x-4">
-              <li>
-                <a href="#" className="hover:text-blue-300">
-                  Terms of Service
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-blue-300">
-                  Privacy Policy
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-blue-300">
-                  Contact Us
-                </a>
-              </li>
-            </ul>
-          </nav>
-        </div>
-      </footer>
-    </div>
+      </main>    </div>
   );
 }
