@@ -2,9 +2,18 @@ export default function Footer() {
   return (
     <footer className="bg-blue-900 text-white py-8 mt-auto border-t border-blue-950">
       <div className="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4">
-        <p className="text-sm text-blue-200">
+        <div
+        className="text-center p-4"
+        style={{ backgroundColor: "rgba(0, 0, 0, 0.05)" }}
+      >
+          
+        <a className="text-reset fw-bold" href="#">
+         © 2026 Copyright Kumkum Kaslikar
+        </a>
+      </div>
+        {/* <p className="text-sm text-blue-200">
           &copy; {new Date().getFullYear()} National Community of Philatelists. All rights reserved.
-        </p>
+        </p> */}
         <nav aria-label="Footer navigation">
           <ul className="flex space-x-6 text-sm">
             <li>
@@ -18,7 +27,7 @@ export default function Footer() {
               </a>
             </li>
             <li>
-              <a href="#" className="text-blue-200 hover:text-white transition-colors">
+              <a href="https://mail.google.com/mail/u/0/#inbox" className="text-blue-200 hover:text-white transition-colors">
                 Contact Us
               </a>
             </li>
@@ -28,3 +37,5 @@ export default function Footer() {
     </footer>
   );
 }
+
+
